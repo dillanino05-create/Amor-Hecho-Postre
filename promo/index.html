@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>El Poli · Promo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,50..100;1,9..144,300..700,50..100&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --cream:#fbf5ec; --paper:#fffdf9; --blush:#f6dcd6; --butter:#f3e6cf; --ink:#2b1b15; --soft:#6e5c52; --berry:#b8334a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--cream); font-family: Manrope, sans-serif; color: var(--ink); }
+  .serif { font-family: Fraunces, serif; font-variation-settings: "SOFT" 100, "opsz" 144; letter-spacing: -0.035em; font-weight: 380; }
+  .serif em { font-style: italic; color: var(--berry); font-weight: 330; }
+  .blob { position: absolute; border-radius: 50%; }
+  #stage { position: absolute; inset: 0; overflow: hidden; }
+
+  /* Escenas a pantalla completa */
+  .full { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; opacity: 0; pointer-events: none; transition: opacity .8s cubic-bezier(.22,1,.36,1); }
+  .full.on { opacity: 1; }
+  .mask { overflow: hidden; display: block; padding-bottom: .08em; }
+  .mask > span { display: inline-block; transform: translateY(110%); transition: transform 1.1s cubic-bezier(.22,1,.36,1); }
+  .on .mask > span { transform: none; }
+
+  /* Subtítulos */
+  #cap { position: absolute; left: 0; right: 0; top: 96px; text-align: center; z-index: 5; }
+  #cap .eyebrow { font-size: 22px; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; color: var(--berry); opacity: 0; transform: translateY(14px); transition: all .7s cubic-bezier(.22,1,.36,1); }
+  #cap h2 { font-size: 78px; line-height: .98; margin-top: 18px; opacity: 0; transform: translateY(24px); transition: all .9s cubic-bezier(.22,1,.36,1) .08s; }
+  #cap.on .eyebrow, #cap.on h2 { opacity: 1; transform: none; }
+
+  /* Teléfono */
+  #phone { position: absolute; left: 50%; top: 330px; width: 738px; height: 1555px; margin-left: -369px; border-radius: 96px; background: #1b1311; padding: 18px; box-shadow: 0 80px 120px -50px rgba(43,27,21,.55), 0 0 0 3px #3a2c27 inset; transform: translateY(140%) rotate(4deg); transition: transform 1.3s cubic-bezier(.22,1,.36,1); z-index: 4; }
+  #phone.on { transform: none; }
+  #screen { position: relative; width: 702px; height: 1519px; border-radius: 80px; overflow: hidden; background: var(--cream); }
+  #screen iframe { width: 390px; height: 844px; border: 0; transform: scale(1.8); transform-origin: 0 0; }
+  #notch { position: absolute; top: 18px; left: 50%; margin-left: -80px; width: 160px; height: 46px; background: #1b1311; border-radius: 30px; z-index: 10; }
+  .tap { position: absolute; width: 90px; height: 90px; margin: -45px 0 0 -45px; border-radius: 50%; background: rgba(184,51,74,.35); border: 4px solid rgba(255,255,255,.9); z-index: 20; pointer-events: none; transform: scale(.4); opacity: 0; }
+  .tap.go { animation: tap .7s ease-out forwards; }
+  @keyframes tap { 0% { transform: scale(.4); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+
+  /* Chat (escena WhatsApp) */
+  #chat { position: absolute; inset: 0; background: #efe7dc; display: flex; flex-direction: column; opacity: 0; transition: opacity .6s; z-index: 6; }
+  #chat.on { opacity: 1; }
+  #chat header { background: #1f6f5c; color: white; padding: 76px 30px 26px; display: flex; align-items: center; gap: 22px; }
+  #chat .av { width: 76px; height: 76px; border-radius: 50%; background: var(--blush); color: var(--berry); display: grid; place-items: center; font-weight: 800; font-size: 32px; }
+  #chat .nm { font-size: 34px; font-weight: 700; }
+  #chat .st { font-size: 24px; opacity: .8; }
+  #msgs { flex: 1; padding: 36px 28px; display: flex; flex-direction: column; gap: 22px; background-image: radial-gradient(rgba(0,0,0,.035) 2px, transparent 2px); background-size: 34px 34px; }
+  .bub { max-width: 86%; padding: 22px 26px 14px; border-radius: 26px; font-size: 27px; line-height: 1.42; white-space: pre-wrap; box-shadow: 0 2px 2px rgba(0,0,0,.08); opacity: 0; transform: translateY(30px) scale(.96); transition: all .6s cubic-bezier(.22,1,.36,1); }
+  .bub.on { opacity: 1; transform: none; }
+  .bub.in { background: white; align-self: flex-start; border-top-left-radius: 6px; }
+  .bub.out { background: #d9fdd3; align-self: flex-end; border-top-right-radius: 6px; }
+  .bub img { width: 100%; height: 330px; object-fit: cover; border-radius: 18px; display: block; margin-bottom: 10px; }
+  .bub time { display: block; text-align: right; font-size: 20px; color: #8a8a8a; margin-top: 6px; }
+  .typing { align-self: flex-end; background: #d9fdd3; padding: 20px 26px; border-radius: 26px; display: none; gap: 8px; }
+  .typing.on { display: flex; }
+  .typing i { width: 12px; height: 12px; border-radius: 50%; background: #5b8f63; animation: dot 1s infinite; }
+  .typing i:nth-child(2) { animation-delay: .15s } .typing i:nth-child(3) { animation-delay: .3s }
+  @keyframes dot { 0%,100% { opacity: .3; transform: translateY(0) } 50% { opacity: 1; transform: translateY(-6px) } }
+
+  /* Notificación */
+  #notif { position: absolute; top: 40px; left: 24px; right: 24px; background: rgba(255,255,255,.96); border-radius: 36px; padding: 26px 28px; display: flex; gap: 22px; align-items: center; box-shadow: 0 30px 60px -20px rgba(0,0,0,.35); transform: translateY(-160%); transition: transform .8s cubic-bezier(.22,1,.36,1); z-index: 12; }
+  #notif.on { transform: none; }
+  #notif .ic { width: 72px; height: 72px; border-radius: 18px; background: #25a35a; display: grid; place-items: center; color: white; font-size: 38px; }
+  #notif b { font-size: 28px; display: block; } #notif span { font-size: 25px; color: #555; }
+  #lock { position: absolute; inset: 0; background: linear-gradient(160deg, #f6dcd6, #f3e6cf 60%, #e9c9c2); z-index: 5; opacity: 0; transition: opacity .6s; display: grid; place-items: center; }
+  #lock.on { opacity: 1; }
+  #lock .clock { font-family: Fraunces, serif; font-size: 190px; color: var(--ink); letter-spacing: -.04em; margin-top: -500px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="blob" style="width:1400px;height:1400px;left:-600px;top:-500px;background:radial-gradient(closest-side,#f6dcd6,rgba(246,220,214,0))"></div>
+  <div class="blob" style="width:1300px;height:1300px;right:-550px;bottom:-500px;background:radial-gradient(closest-side,#f3e6cf,rgba(243,230,207,0))"></div>
+
+  <!-- Intro -->
+  <section class="full" id="intro">
+    <div>
+      <p class="mask" style="font-size:24px;font-weight:800;letter-spacing:.35em;text-transform:uppercase;color:var(--soft)"><span>Repostería casera · por encargo</span></p>
+      <h1 class="serif mask" style="font-size:260px;line-height:.9;margin-top:40px"><span>El <em>Poli</em></span></h1>
+      <p class="serif mask" style="font-size:64px;margin-top:40px;line-height:1.05"><span>Hecho en casa,</span></p>
+      <p class="serif mask" style="font-size:64px;line-height:1.05"><span><em>horneado para tu día.</em></span></p>
+    </div>
+  </section>
+
+  <div id="cap"><p class="eyebrow" id="capE"></p><h2 class="serif" id="capH"></h2></div>
+
+  <div id="phone">
+    <div id="screen">
+      <div id="notch"></div>
+      <iframe id="app" src="/"></iframe>
+      <div id="lock"><div class="clock">9:41</div></div>
+      <div id="notif"><div class="ic">💬</div><div><b>Nuevo pedido · Valentina</b><span>¡Hola! 👋 Quiero hacer un pedido 🎂…</span></div></div>
+      <div id="chat">
+        <header><div class="av">V</div><div><div class="nm">Valentina</div><div class="st">en línea</div></div></header>
+        <div id="msgs">
+          <div class="bub in" id="b1"><img id="b1img" alt="" /><span id="b1t"></span><time>9:41 a. m.</time></div>
+          <div class="typing" id="typ"><i></i><i></i><i></i></div>
+          <div class="bub out" id="b2">¡Hola Valentina! 🥰 Sí tengo cupo para el jueves. Te paso el precio y la separas con el 50% 🎂<time>9:42 a. m. ✓✓</time></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cierre -->
+  <section class="full" id="outro">
+    <div>
+      <h1 class="serif mask" style="font-size:240px;line-height:.9"><span>El <em>Poli</em></span></h1>
+      <p class="serif mask" style="font-size:66px;margin-top:40px"><span>Tu página, <em>tus pedidos.</em></span></p>
+      <div class="mask" style="margin-top:70px"><span style="display:inline-flex;gap:18px;align-items:center;background:var(--ink);color:var(--paper);padding:30px 50px;border-radius:999px;font-size:34px;font-weight:700">💬 Pedidos directo a tu WhatsApp</span></div>
+      <p class="mask" style="margin-top:60px;font-size:26px;color:var(--soft);font-weight:600"><span>Próximamente: tu logo y las fotos de tus tortas reales ✨</span></p>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const app = $('#app');
+const W = () => app.contentWindow;
+const D = () => app.contentDocument;
+const S = 1.8;
+
+function caption(e, h) {
+  const c = $('#cap');
+  c.classList.remove('on');
+  return wait(450).then(() => { $('#capE').textContent = e; $('#capH').innerHTML = h; c.classList.add('on'); });
+}
+// scroll suave controlado dentro del iframe
+function scrollTo(y, ms = 1800) {
+  const w = W(); const y0 = w.scrollY; const t0 = performance.now();
+  const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  return new Promise((res) => {
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / ms);
+      w.scrollTo({ top: y0 + (y - y0) * ease(t), behavior: 'instant' });
+      t < 1 ? requestAnimationFrame(step) : res();
+    };
+    requestAnimationFrame(step);
+  });
+}
+const yOf = (sel, off = 0) => D().querySelector(sel).getBoundingClientRect().top + W().scrollY + off;
+async function tap(el) {
+  el.scrollIntoView?.({ block: 'nearest' });
+  const r = el.getBoundingClientRect();
+  const t = document.createElement('div'); t.className = 'tap';
+  t.style.left = (r.left + r.width / 2) * S + 'px'; t.style.top = (r.top + r.height / 2) * S + 'px';
+  $('#screen').appendChild(t); requestAnimationFrame(() => t.classList.add('go'));
+  await wait(260); el.click(); setTimeout(() => t.remove(), 800);
+}
+function setVal(el, v) {
+  const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : el.tagName === 'SELECT' ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+  Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, v);
+  el.dispatchEvent(new Event(el.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
+}
+async function type(el, text, speed = 55) {
+  el.focus();
+  for (let i = 1; i <= text.length; i++) { setVal(el, text.slice(0, i)); await wait(speed); }
+}
+
+async function run() {
+  await new Promise((r) => app.addEventListener('load', r, { once: true }));
+  // Captura el enlace de WhatsApp en vez de abrir otra pestaña
+  const st = D().createElement('style');
+  st.textContent = '.grain::after{display:none!important} .blur-3xl{filter:none!important;opacity:.45!important} html{scrollbar-width:none} [aria-label="Cambiar paleta de colores"]{display:none!important}';
+  D().head.appendChild(st);
+  let waText = '';
+  W().open = (url) => { waText = decodeURIComponent(new URL(url).searchParams.get('text') || ''); return null; };
+  // Prepara la foto de referencia
+  const blob = await fetch('https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=700&q=80').then((r) => r.blob());
+  const refUrl = URL.createObjectURL(blob);
+
+  // 1 · Intro
+  $('#intro').classList.add('on');
+  await wait(3400);
+  $('#intro').classList.remove('on');
+  await wait(400);
+
+  // 2 · Portada
+  $('#phone').classList.add('on');
+  await caption('Tu página web', 'Hecha a la <em>medida</em><br/>de tu cocina');
+  await wait(3200);
+
+  // 3 · Catálogo
+  await caption('Tu catálogo', 'Todo lo que <em>preparas</em>,<br/>en un solo lugar');
+  await scrollTo(yOf('#catalogo', -10), 1800);
+  await wait(500);
+  const chips = [...D().querySelectorAll('#catalogo [role=tab]')];
+  await tap(chips.find((c) => c.textContent.includes('Brownies'))); await wait(1100);
+  await tap(chips.find((c) => c.textContent.includes('Tortas'))); await wait(700);
+  await scrollTo(yOf('#catalogo', 900), 2200);
+  await wait(500);
+
+  // 4 · Galería
+  await caption('Tus trabajos', 'Lo que ya <em>has hecho</em>,<br/>para enamorar');
+  await scrollTo(yOf('#galeria', 0), 1800);
+  await wait(400);
+  await scrollTo(yOf('#galeria', 700), 2400);
+  await tap(D().querySelector('#galeria button[aria-label^="Ver"]'));
+  await wait(2200);
+  await tap(D().querySelector('[role=dialog] button[aria-label="Cerrar"]'));
+  await wait(500);
+
+  // 5 · Pedido con foto
+  await caption('Pedidos por encargo', 'Te piden con <em>foto</em>,<br/>fecha y detalles');
+  await scrollTo(yOf('#pedido', 560), 2200);
+  await wait(300);
+  const form = D().querySelector('#pedido form');
+  const file = form.querySelector('input[type=file]');
+  const IW = W(); const dt = new IW.DataTransfer();
+  dt.items.add(new IW.File([blob], 'referencia.jpg', { type: 'image/jpeg' }));
+  file.files = dt.files; file.dispatchEvent(new Event('change', { bubbles: true }));
+  await wait(900);
+  await type(form.querySelector('input[type=number]'), '15', 120);
+  await type(form.querySelector('input[placeholder^="Ej: torta"]'), 'Torta de fresas, tonos rosados 🌸', 45);
+  await scrollTo(W().scrollY + 330, 900);
+  setVal(form.querySelector('input[type=date]'), '2026-11-19');
+  await wait(400);
+  await tap([...form.querySelectorAll('button')].find((b) => b.textContent === 'Domicilio'));
+  await wait(300);
+  await type(form.querySelector('textarea'), 'Que diga "Feliz cumple, Sofi" 💕', 45);
+  await scrollTo(W().scrollY + 360, 900);
+  await type(form.querySelector('input[autocomplete=name]'), 'Valentina', 70);
+  await type(form.querySelector('input[type=tel]'), '300 123 4567', 60);
+  await wait(400);
+  await caption('Un solo toque', 'Y se envía <em>directo</em><br/>a tu WhatsApp');
+  await tap(form.querySelector('button[type=submit]'));
+  await wait(500);
+
+  // 6 · Llega el mensaje
+  $('#lock').classList.add('on');
+  await caption('Y a ti te llega así', 'El pedido, <em>completito</em>,<br/>en tu celular');
+  await wait(900);
+  $('#notif').classList.add('on');
+  await wait(2000);
+  $('#notif').classList.remove('on');
+  $('#b1img').src = refUrl;
+  $('#b1t').innerHTML = waText.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]).replace(/\*([^*\n]+)\*/g, '<b>$1</b>');
+  $('#chat').classList.add('on');
+  await wait(600);
+  $('#b1').classList.add('on');
+  await wait(3800);
+  $('#typ').classList.add('on');
+  await wait(1500);
+  $('#typ').classList.remove('on');
+  $('#b2').classList.add('on');
+  await wait(3000);
+
+  // 7 · Cierre
+  $('#phone').classList.remove('on');
+  $('#cap').classList.remove('on');
+  await wait(700);
+  $('#outro').classList.add('on');
+  await wait(5200);
+  window.__done = true;
+}
+run().catch((e) => { console.error(e); window.__error = String(e && e.stack || e); });
+</script>
+</body>
+</html>

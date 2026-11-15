@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>El Poli · Promo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,50..100;1,9..144,300..700,50..100&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --cream:#fbf5ec; --paper:#fffdf9; --blush:#f6dcd6; --butter:#f3e6cf; --ink:#2b1b15; --soft:#6e5c52; --berry:#b8334a; --u:10.8px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow: hidden; background: var(--cream); font-family: Manrope, sans-serif; color: var(--ink); }
+  #stage { position: relative; overflow: hidden; background: radial-gradient(120% 80% at 0% 0%, #f8e3dc 0%, var(--cream) 55%, #f6ead8 100%); }
+  .scene { position: absolute; inset: 0; display: flex; opacity: 0; will-change: opacity, transform; }
+  .v .scene { flex-direction: column; }
+  .h .scene { flex-direction: row; }
+  .txt { display: flex; flex-direction: column; justify-content: center; }
+  .v .txt { padding: calc(var(--u)*13) calc(var(--u)*7) calc(var(--u)*5); align-items: center; text-align: center; }
+  .h .txt { width: 44%; padding: 0 calc(var(--u)*5) 0 calc(var(--u)*9); }
+  .media { position: relative; flex: 1; }
+  .v .media { margin: 0 calc(var(--u)*8) calc(var(--u)*13); }
+  .h .media { margin: calc(var(--u)*9) calc(var(--u)*9) calc(var(--u)*9) 0; }
+  .center { align-items: center; justify-content: center; text-align: center; flex-direction: column !important; }
+
+  .eyebrow { font-size: calc(var(--u)*2); font-weight: 800; letter-spacing: .3em; text-transform: uppercase; color: var(--berry); }
+  .h2 { font-family: Fraunces, serif; font-variation-settings: "SOFT" 100, "opsz" 144; letter-spacing: -0.035em; font-weight: 380; font-size: calc(var(--u)*8.6); line-height: .98; margin-top: calc(var(--u)*2.6); }
+  .h2 em, .logo em { font-style: italic; color: var(--berry); font-weight: 330; }
+  .sub { font-size: calc(var(--u)*2.7); line-height: 1.45; color: var(--soft); margin-top: calc(var(--u)*3); max-width: 30em; }
+  .rise { display: block; overflow: hidden; padding-bottom: .1em; }
+  .rise > span { display: inline-block; }
+  .logo { font-family: Fraunces, serif; font-variation-settings: "SOFT" 100, "opsz" 144; letter-spacing: -0.04em; font-weight: 380; font-size: calc(var(--u)*22); line-height: .95; }
+
+  .card { position: absolute; overflow: hidden; border-radius: calc(var(--u)*3.4); background: var(--butter); box-shadow: 0 calc(var(--u)*4) calc(var(--u)*8) calc(var(--u)*-3) rgba(43,27,21,.45); will-change: transform, opacity; }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform, opacity; }
+  .label { position: absolute; left: 0; right: 0; bottom: 0; padding: calc(var(--u)*5) calc(var(--u)*2.4) calc(var(--u)*2); background: linear-gradient(transparent, rgba(43,27,21,.75)); color: var(--paper); font-family: Fraunces, serif; font-size: calc(var(--u)*3.6); letter-spacing: -0.02em; }
+  .chips { position: relative; height: calc(var(--u)*9); margin-top: calc(var(--u)*3.5); width: 100%; overflow: hidden; }
+  .chips span { position: absolute; left: 0; right: 0; font-family: Fraunces, serif; font-style: italic; font-size: calc(var(--u)*7); color: var(--berry); }
+  .h .chips span { text-align: left; }
+  .line { height: 2px; width: calc(var(--u)*24); background: rgba(43,27,21,.35); transform-origin: left; margin: calc(var(--u)*4) auto 0; }
+  .pill { display: inline-flex; align-items: center; gap: calc(var(--u)*1.4); margin-top: calc(var(--u)*5); padding: calc(var(--u)*2.2) calc(var(--u)*4.4); border-radius: 999px; background: #1f8f5f; color: white; font-weight: 800; font-size: calc(var(--u)*3); }
+
+  .phone { position: absolute; top: 0; bottom: 0; left: 50%; aspect-ratio: 418 / 872; transform: translateX(-50%); border-radius: calc(var(--u)*6); background: #1b1311; padding: calc(var(--u)*1.3); box-shadow: 0 calc(var(--u)*6) calc(var(--u)*10) calc(var(--u)*-4) rgba(43,27,21,.55); }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: calc(var(--u)*4.8); overflow: hidden; background: var(--cream); }
+  .strip { position: absolute; left: 0; top: 0; width: 100%; height: 500%; will-change: transform; }
+  .strip img { display: block; width: 100%; height: 20%; object-fit: cover; object-position: top; }
+  .notch { position: absolute; top: calc(var(--u)*1.2); left: 50%; width: 28%; height: calc(var(--u)*3.2); transform: translateX(-50%); background: #1b1311; border-radius: 99px; z-index: 3; }
+  .toast { position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%); white-space: nowrap; z-index: 5; padding: calc(var(--u)*2) calc(var(--u)*3.4); border-radius: calc(var(--u)*2.4); background: #e3f7e9; color: #13583a; font-weight: 800; font-size: calc(var(--u)*2.6); box-shadow: 0 calc(var(--u)*2) calc(var(--u)*5) rgba(0,0,0,.25); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- 1 · Intro -->
+  <section class="scene center" id="s1">
+    <p class="eyebrow fade" data-d=".9">Repostería casera · por encargo</p>
+    <div class="logo" style="margin-top:calc(var(--u)*3)"><div class="rise"><span>El <em>Poli</em></span></div></div>
+    <div class="line"></div>
+  </section>
+
+  <!-- 2 · Hero -->
+  <section class="scene" id="s2">
+    <div class="txt">
+      <p class="eyebrow fade" data-d=".1">Hecho en casa</p>
+      <div class="h2"><div class="rise"><span>Horneado</span></div><div class="rise"><span><em>para tu día.</em></span></div></div>
+      <p class="sub fade" data-d=".8">Tortas, cheesecakes, cupcakes y mini tortas, hechos a mano.</p>
+    </div>
+    <div class="media">
+      <div class="card" id="s2big" style="left:14%;top:0;right:0;bottom:0;border-radius:999px 999px calc(var(--u)*3.4) calc(var(--u)*3.4)"><img src="../public/fotos/19.jpg" /></div>
+      <div class="card" id="s2small" style="left:0;bottom:6%;width:44%;aspect-ratio:1;border:calc(var(--u)*.8) solid var(--paper)"><img src="../public/fotos/18.jpg" /></div>
+    </div>
+  </section>
+
+  <!-- 3 · Ocasión -->
+  <section class="scene" id="s3">
+    <div class="txt">
+      <p class="eyebrow fade" data-d=".1">Para toda ocasión</p>
+      <div class="h2"><div class="rise"><span>Tú eliges</span></div><div class="rise"><span>la ocasión:</span></div></div>
+      <div class="chips"><span>Cumpleaños</span><span>Infantiles</span><span>Grados</span><span>Aniversarios</span></div>
+    </div>
+    <div class="media">
+      <div class="card" style="inset:0"><img src="../public/fotos/9.jpg" /><img src="../public/fotos/20.jpg" /><img src="../public/fotos/22.jpg" /><img src="../public/fotos/1.jpg" /></div>
+    </div>
+  </section>
+
+  <!-- 4 · Mensajes -->
+  <section class="scene" id="s4">
+    <div class="txt">
+      <p class="eyebrow fade" data-d=".1">Mensajes personalizados</p>
+      <div class="h2"><div class="rise"><span>Para dedicar,</span></div><div class="rise"><span><em>para sorprender</em></span></div></div>
+      <p class="sub fade" data-d=".8">Un nombre, una frase, un dibujo. Tú lo imaginas, yo lo horneo.</p>
+    </div>
+    <div class="media grid4">
+      <div class="card"><img src="../public/fotos/25.jpg" /></div>
+      <div class="card"><img src="../public/fotos/27.jpg" /></div>
+      <div class="card"><img src="../public/fotos/29.jpg" /></div>
+      <div class="card"><img src="../public/fotos/30.jpg" /></div>
+    </div>
+  </section>
+
+  <!-- 5 · Tamaños -->
+  <section class="scene" id="s5">
+    <div class="txt">
+      <p class="eyebrow fade" data-d=".1">Del tamaño que necesites</p>
+      <div class="h2"><div class="rise"><span>Para ti solo</span></div><div class="rise"><span><em>o para cien</em></span></div></div>
+      <p class="sub fade" data-d=".8">Personales, en cajita para regalar, para compartir o de varios pisos.</p>
+    </div>
+    <div class="media grid4">
+      <div class="card"><img src="../public/fotos/32.jpg" /><div class="label">Personal</div></div>
+      <div class="card"><img src="../public/fotos/28.jpg" /><div class="label">Para regalar</div></div>
+      <div class="card"><img src="../public/fotos/13.jpg" /><div class="label">Para compartir</div></div>
+      <div class="card"><img src="../public/fotos/23.jpg" /><div class="label">Para eventos</div></div>
+    </div>
+  </section>
+
+  <!-- 6 · Web -->
+  <section class="scene" id="s6">
+    <div class="txt">
+      <p class="eyebrow fade" data-d=".1">Pedir es fácil</p>
+      <div class="h2"><div class="rise"><span>Mira el catálogo</span></div><div class="rise"><span><em>y pide en línea</em></span></div></div>
+      <p class="sub fade" data-d=".8">Eliges, subes tu foto de referencia y el pedido llega directo a WhatsApp.</p>
+    </div>
+    <div class="media">
+      <div class="phone" id="phone"><div class="screen"><div class="notch"></div>
+        <div class="strip" id="strip"><img src="shots/s1.png" /><img src="shots/s2.png" /><img src="shots/s3.png" /><img src="shots/s4.png" /><img src="shots/s5.png" /></div>
+      </div></div>
+      <div class="toast" id="toast">✓ Pedido enviado por WhatsApp</div>
+    </div>
+  </section>
+
+  <!-- 7 · Cierre -->
+  <section class="scene center" id="s7">
+    <p class="eyebrow fade" data-d=".5">Repostería casera</p>
+    <div class="logo" style="margin-top:calc(var(--u)*3)"><div class="rise"><span>El <em>Poli</em></span></div></div>
+    <p class="sub fade" data-d=".9" style="margin-left:auto;margin-right:auto">Hecho en casa, a tu medida, para cualquier ocasión.</p>
+    <div class="fade" data-d="1.3"><span class="pill">Haz tu pedido por WhatsApp</span></div>
+  </section>
+</div>
+
+<script>
+const q = new URLSearchParams(location.search);
+const W = +q.get('w') || 1080, H = +q.get('h') || 1920, V = H > W;
+const stage = document.getElementById('stage');
+stage.style.width = W + 'px'; stage.style.height = H + 'px';
+stage.className = V ? 'v' : 'h';
+document.documentElement.style.setProperty('--u', Math.min(W, H) / 100 + 'px');
+
+// Rejilla 2x2 de tarjetas
+document.querySelectorAll('.grid4').forEach((g) => g.querySelectorAll('.card').forEach((c, i) => {
+  const x = i % 2, y = Math.floor(i / 2);
+  Object.assign(c.style, { left: x ? '52%' : '0', top: y ? '52%' : '0', width: '48%', height: '48%' });
+}));
+
+const cl = (x) => Math.max(0, Math.min(1, x));
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const eo = (x) => 1 - Math.pow(1 - x, 3);
+const eio = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+const SC = [
+  ['s1', 0, 3.8], ['s2', 3.4, 9.4], ['s3', 9.0, 15.6], ['s4', 15.2, 21.0],
+  ['s5', 20.6, 26.4], ['s6', 26.0, 33.4], ['s7', 33.0, 99],
+];
+window.DURATION = 38;
+const $ = (id) => document.getElementById(id);
+
+function base(el, t, a, b) {
+  const fin = eo(seg(t, a, a + 0.5)), fout = eio(seg(t, b - 0.45, b));
+  el.style.opacity = t < a || t > b ? 0 : fin * (1 - fout);
+  el.style.transform = `scale(${1 + fout * 0.04})`;
+  el.querySelectorAll('.rise > span').forEach((s, i) => {
+    const p = eo(seg(t, a + 0.2 + i * 0.12, a + 1.2 + i * 0.12));
+    s.style.transform = `translateY(${(1 - p) * 110}%)`;
+  });
+  el.querySelectorAll('.fade').forEach((s) => {
+    const d = +s.dataset.d || 0, p = eo(seg(t, a + d, a + d + 0.8));
+    s.style.opacity = p; s.style.transform = `translateY(${(1 - p) * 24}px)`;
+  });
+}
+
+function pop(cards, t, t0, rots) {
+  cards.forEach((c, i) => {
+    const p = eo(seg(t, t0 + i * 0.22, t0 + 0.9 + i * 0.22));
+    c.style.opacity = p;
+    c.style.transform = `translateY(${(1 - p) * 8}%) scale(${0.86 + 0.14 * p}) rotate(${(1 - p) * rots[i]}deg)`;
+    const img = c.querySelector('img');
+    img.style.transform = `scale(${1.12 - 0.12 * eio(seg(t, t0, t0 + 5.5))})`;
+  });
+}
+
+window.render = (t) => {
+  for (const [id, a, b] of SC) base($(id), t, a, b);
+
+  $('s1').querySelector('.line').style.transform = `scaleX(${eio(seg(t, 0.5, 2.2))})`;
+
+  // Hero
+  const pb = eo(seg(t, 3.5, 5.0));
+  $('s2big').style.clipPath = `inset(${(1 - pb) * 100}% 0 0 0)`;
+  $('s2big').querySelector('img').style.transform = `scale(${1.16 - 0.16 * eio(seg(t, 3.4, 9.4))})`;
+  const ps = eo(seg(t, 4.7, 5.6));
+  $('s2small').style.opacity = ps;
+  $('s2small').style.transform = `scale(${0.8 + 0.2 * ps}) translateY(${-Math.sin(t * 0.9) * 0.6}%)`;
+
+  // Ocasión: fotos y palabras que rotan
+  const S = [9.0, 10.6, 12.2, 13.8];
+  const imgs = $('s3').querySelectorAll('.card img'), words = $('s3').querySelectorAll('.chips span');
+  S.forEach((s, i) => {
+    imgs[i].style.opacity = i === 0 ? 1 : eo(seg(t, s - 0.1, s + 0.45));
+    imgs[i].style.transform = `scale(${1.1 - 0.1 * eio(seg(t, s - 0.1, s + 2.2))})`;
+    const p = eo(seg(t, s + 0.15, s + 0.7));
+    const o = i < S.length - 1 ? eio(seg(t, S[i + 1] - 0.05, S[i + 1] + 0.35)) : 0;
+    words[i].style.opacity = p * (1 - o);
+    words[i].style.transform = `translateY(${(1 - p) * 100 - o * 100}%)`;
+  });
+
+  pop([...$('s4').querySelectorAll('.card')], t, 15.6, [-6, 5, 4, -5]);
+  pop([...$('s5').querySelectorAll('.card')], t, 21.0, [5, -4, -5, 6]);
+
+  // Teléfono con la web
+  const pp = eo(seg(t, 26.2, 27.3));
+  $('phone').style.transform = `translateX(-50%) translateY(${(1 - pp) * 30}%)`;
+  $('phone').style.opacity = pp;
+  let pos = 0;
+  for (let k = 0; k < 4; k++) pos += eio(seg(t, 27.7 + k * 1.15, 28.35 + k * 1.15));
+  $('strip').style.transform = `translateY(${-pos * 20}%)`;
+  const pt = eo(seg(t, 32.0, 32.5));
+  $('toast').style.opacity = pt;
+  $('toast').style.transform = `translateX(-50%) scale(${0.8 + 0.2 * pt})`;
+};
+
+(async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
+  render(0);
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

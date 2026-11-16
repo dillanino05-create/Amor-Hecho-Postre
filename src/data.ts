@@ -1,12 +1,9 @@
-// Fotos reales de El Poli (public/fotos, numeradas igual que la carpeta original).
+// Fotos reales de Amor Hecho Postre (public/fotos, numeradas igual que la carpeta original).
 export const foto = (n: string | number) => `/fotos/${n}.jpg`;
 
-export const WHATSAPP = '573105008733'; // número de prueba
+export const WHATSAPP = '573105008733';
 
-export const cop = (n: number) =>
-  new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
-
-export const INSTAGRAM = 'elpoli.reposteria'; // TODO: usuario real
+export const INSTAGRAM = 'amorhechopostre';
 // Opcional: endpoint de Formspree / Web3Forms para recibir pedidos desde la página (con foto).
 export const FORM_ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT ?? '';
 
@@ -18,7 +15,6 @@ export interface Product {
   desc: string;
   category: Category;
   image: string;
-  from: number; // TODO: confirmar precios reales con El Poli
   note: string; // tamaños / unidades
   tag?: string;
 }
@@ -26,35 +22,35 @@ export interface Product {
 export const CATEGORIES: ('Todo' | Category)[] = ['Todo', 'Tortas', 'Cheesecakes', 'Mini tortas', 'Cupcakes', 'Caseras'];
 
 export const PRODUCTS: Product[] = [
-  { id: 'vainilla-arequipe', name: 'Ponqué de vainilla con arequipe', category: 'Tortas', tag: 'La más pedida', from: 45000, note: 'De 8 a 80 porciones',
+  { id: 'vainilla-arequipe', name: 'Ponqué de vainilla con arequipe', category: 'Tortas', tag: 'La más pedida', note: 'De 8 a 80 porciones',
     desc: 'La clásica de cumpleaños: ponqué de vainilla relleno de arequipe, decorada con tus colores.', image: foto(40) },
-  { id: 'vainilla-chocolate', name: 'Ponqué de vainilla con chocolate', category: 'Tortas', from: 45000, note: 'De 8 a 30 porciones',
+  { id: 'vainilla-chocolate', name: 'Ponqué de vainilla con chocolate', category: 'Tortas', note: 'De 8 a 30 porciones',
     desc: 'Ponqué de vainilla relleno de chocolate, con crema y el diseño que quieras.', image: foto(13) },
-  { id: 'chocolatosa', name: 'Torta chocolatosa', category: 'Tortas', from: 50000, note: 'De 8 a 15 porciones',
+  { id: 'chocolatosa', name: 'Torta chocolatosa', category: 'Tortas', note: 'De 8 a 15 porciones',
     desc: 'Chocolate relleno de chocolate, con drip, crema y chocolatinas encima.', image: foto(17) },
-  { id: 'fresas', name: 'Torta fría de fresas con crema', category: 'Tortas', from: 60000, note: '15 porciones',
+  { id: 'fresas', name: 'Torta fría de fresas con crema', category: 'Tortas', note: '15 porciones',
     desc: 'Fresca y suave, rellena de fresas con crema. Ideal para tarde de onces.', image: foto(4) },
-  { id: 'arequipe', name: 'Torta de arequipe', category: 'Tortas', from: 50000, note: 'Hasta 100 porciones',
+  { id: 'arequipe', name: 'Torta de arequipe', category: 'Tortas', note: 'Hasta 100 porciones',
     desc: 'Capas y capas de arequipe con chocolate granulado. Para los más golosos.', image: foto(14) },
-  { id: 'chocolate-maracuya', name: 'Chocolate con ganache de maracuyá', category: 'Tortas', from: 65000, note: 'Por encargo',
+  { id: 'chocolate-maracuya', name: 'Chocolate con ganache de maracuyá', category: 'Tortas', note: 'Por encargo',
     desc: 'Chocolate intenso con ganache de maracuyá: dulce y ácido a la vez.', image: foto(37) },
-  { id: 'cheese-frutos', name: 'Cheesecake de frutos rojos', category: 'Cheesecakes', tag: 'Favorito', from: 70000, note: 'De 15 a 20 porciones',
+  { id: 'cheese-frutos', name: 'Cheesecake de frutos rojos', category: 'Cheesecakes', tag: 'Favorito', note: 'De 15 a 20 porciones',
     desc: 'Cremoso, con base de galleta, mermelada de frutos rojos, fresas y arándanos.', image: foto(10) },
-  { id: 'cheese-maracuya', name: 'Cheesecake de maracuyá', category: 'Cheesecakes', from: 70000, note: '15 porciones',
+  { id: 'cheese-maracuya', name: 'Cheesecake de maracuyá', category: 'Cheesecakes', note: '15 porciones',
     desc: 'Con cubierta de maracuyá, crema y chocolate granulado alrededor.', image: foto(11) },
-  { id: 'mini-mensaje', name: 'Mini torta con mensaje', category: 'Mini tortas', tag: 'Para regalar', from: 25000, note: 'Personal · en cajita',
+  { id: 'mini-mensaje', name: 'Mini torta con mensaje', category: 'Mini tortas', tag: 'Para regalar', note: 'Personal · en cajita',
     desc: 'Mini personal de arequipe con el dibujo y la frase que tú quieras. El detalle perfecto.', image: foto(29) },
-  { id: 'mini-zanahoria', name: 'Mini torta de zanahoria', category: 'Mini tortas', from: 25000, note: 'Personal',
+  { id: 'mini-zanahoria', name: 'Mini torta de zanahoria', category: 'Mini tortas', note: 'Personal',
     desc: 'Zanahoria con frutos secos, crema y nuez encima.', image: foto(32) },
-  { id: 'cupcakes-vainilla', name: 'Cupcakes decorados', category: 'Cupcakes', from: 4000, note: 'Por unidad · desde 12',
+  { id: 'cupcakes-vainilla', name: 'Cupcakes decorados', category: 'Cupcakes', note: 'Por unidad · desde 12',
     desc: 'Cupcakes de vainilla con flores de crema. Perfectos para mesas dulces y eventos.', image: foto(18) },
-  { id: 'cupcakes-banana', name: 'Cupcakes de banana con chips', category: 'Cupcakes', from: 3500, note: 'Por unidad · desde 12',
+  { id: 'cupcakes-banana', name: 'Cupcakes de banana con chips', category: 'Cupcakes', note: 'Por unidad · desde 12',
     desc: 'Esponjosos, de banana con chips de chocolate. Para el café o la lonchera.', image: foto(39) },
-  { id: 'zanahoria', name: 'Torta de zanahoria', category: 'Caseras', from: 45000, note: '15 porciones',
+  { id: 'zanahoria', name: 'Torta de zanahoria', category: 'Caseras', note: '15 porciones',
     desc: 'Con frutos secos, húmeda y especiada, como la de la abuela.', image: foto(33) },
-  { id: 'auyama', name: 'Torta de auyama con queso y bocadillo', category: 'Caseras', tag: 'De la casa', from: 45000, note: 'Entera',
+  { id: 'auyama', name: 'Torta de auyama con queso y bocadillo', category: 'Caseras', tag: 'De la casa', note: 'Entera',
     desc: 'Receta tradicional: auyama, queso y trocitos de bocadillo.', image: foto(41) },
-  { id: 'naranja', name: 'Ponqué de naranja y amapola', category: 'Caseras', from: 35000, note: 'Entero',
+  { id: 'naranja', name: 'Ponqué de naranja y amapola', category: 'Caseras', note: 'Entero',
     desc: 'Con semillas de amapola, glaseado y rodajas de naranja.', image: foto(35) },
 ];
 

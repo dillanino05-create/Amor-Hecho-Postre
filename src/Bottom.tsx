@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
-import { Plus, MessageCircle, MapPin, Clock, Instagram, ArrowUpRight, Palette } from 'lucide-react';
+import { Plus, MessageCircle, MapPin, Clock, Instagram, ArrowUpRight, Palette, ImagePlus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { scrollToSection } from './cart';
 import { FAQ, INSTAGRAM, REVIEWS, WHATSAPP, foto } from './data';
 import { Logo } from './Top';
 import { Magnetic, Reveal, SplitHeading, btnPrimary, ease } from './ui';
@@ -83,9 +84,53 @@ export function Resenas() {
 export function Contacto() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="contacto" className="scroll-mt-20 px-4 pb-24 sm:px-6 lg:pb-32">
-      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2">
-        <div>
+    <section className="px-4 pb-24 sm:px-6 lg:pb-32">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-start">
+        <div id="contacto" className="scroll-mt-28">
+          <Reveal delay={0.05}>
+            <div className="relative overflow-hidden rounded-[2rem] bg-blush p-8 sm:p-12">
+              <img src={foto(4)} alt="" aria-hidden className="absolute -bottom-16 -right-16 h-64 w-64 rounded-full object-cover opacity-85 ring-8 ring-paper/60 sm:h-72 sm:w-72" />
+              <div className="relative">
+                <div className="flex items-center gap-4">
+                  <img src="/logo-circle.png" alt="Logo Amor Hecho Postre" className="h-20 w-20 shrink-0 rounded-full bg-[#FFF4E0] object-cover shadow-md ring-4 ring-paper" />
+                  <div>
+                    <p className="eyebrow">Contacto directo</p>
+                    <p className="display mt-1 text-2xl">Amor Hecho <em>Postre</em></p>
+                  </div>
+                </div>
+                <h3 className="display mt-6 max-w-sm text-4xl sm:text-5xl">¿Tienes una fecha <em>especial?</em></h3>
+                <p className="mt-4 max-w-xs text-soft">Escríbeme y cuéntame qué celebras. Te respondo el mismo día.</p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Magnetic href={`https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${encodeURIComponent('¡Hola! Quiero cotizar un pedido 🎂')}`} className={btnPrimary}>
+                    <MessageCircle size={17} /> WhatsApp · 310 500 8733
+                  </Magnetic>
+                  <a
+                    href={`https://instagram.com/${INSTAGRAM}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-5 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-colors hover:border-ink"
+                  >
+                    <Instagram size={16} /> @{INSTAGRAM}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('#pedido')}
+                    className="inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-5 py-3.5 text-sm font-semibold text-ink backdrop-blur transition-colors hover:border-ink"
+                  >
+                    <ImagePlus size={16} /> Ir al formulario
+                  </button>
+                </div>
+                <ul className="mt-9 grid max-w-[17rem] gap-4 text-sm sm:max-w-xs">
+                  <li className="flex gap-3"><Clock size={18} className="mt-0.5 shrink-0 text-berry" /><span><b>Pedidos todos los días</b><br /><span className="text-soft">Entregas con cita, según disponibilidad</span></span></li>
+                  <li className="flex gap-3"><MapPin size={18} className="mt-0.5 shrink-0 text-berry" /><span>Hecho en casa · recoges aquí<br /><span className="text-soft">Domicilio según la zona</span></span></li>
+                  <li className="flex gap-3"><Instagram size={18} className="mt-0.5 shrink-0 text-berry" /><span>@{INSTAGRAM}</span></li>
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        <div id="preguntas" className="scroll-mt-28">
           <Reveal><p className="eyebrow">06 — Preguntas frecuentes</p></Reveal>
           <SplitHeading text="Lo que *siempre* nos preguntan." className="mt-4 text-[clamp(2.2rem,4.4vw,3.8rem)]" />
           <div className="mt-10 divide-y divide-line border-y border-line">
@@ -108,25 +153,6 @@ export function Contacto() {
             ))}
           </div>
         </div>
-
-        <Reveal delay={0.1}>
-          <div className="relative overflow-hidden rounded-[2rem] bg-blush p-8 sm:p-12">
-            <img src={foto(4)} alt="" aria-hidden className="absolute -bottom-16 -right-16 h-72 w-72 rounded-full object-cover opacity-90 ring-8 ring-paper/60 sm:h-80 sm:w-80" />
-            <div className="relative">
-              <p className="eyebrow">Hablemos</p>
-              <h3 className="display mt-3 max-w-sm text-5xl sm:text-6xl">¿Tienes una fecha <em>especial?</em></h3>
-              <p className="mt-4 max-w-xs text-soft">Escríbeme y cuéntame qué celebras. Te respondo el mismo día.</p>
-              <Magnetic href={`https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${encodeURIComponent('¡Hola! Quiero cotizar un pedido 🎂')}`} className={`${btnPrimary} mt-8`}>
-                <MessageCircle size={17} /> Escríbeme por WhatsApp
-              </Magnetic>
-              <ul className="mt-10 grid max-w-[16rem] gap-4 text-sm sm:max-w-xs">
-                <li className="flex gap-3"><Clock size={18} className="mt-0.5 shrink-0 text-berry" /><span><b>Pedidos todos los días</b><br /><span className="text-soft">Entregas con cita, según disponibilidad</span></span></li>
-                <li className="flex gap-3"><MapPin size={18} className="mt-0.5 shrink-0 text-berry" /><span>Hecho en casa · recoges aquí<br /><span className="text-soft">Domicilio según la zona</span></span></li>
-                <li className="flex gap-3"><Instagram size={18} className="mt-0.5 shrink-0 text-berry" /><span>@{INSTAGRAM}</span></li>
-              </ul>
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
@@ -142,14 +168,36 @@ export function Footer() {
         </div>
         <div className="grid grid-cols-2 gap-10 text-sm">
           <ul className="space-y-2.5">
-            {[['Catálogo', '#catalogo'], ['Lo que he hecho', '#galeria'], ['Hacer un pedido', '#pedido']].map(([l, h]) => (
-              <li key={h}><a href={h} className="text-soft hover:text-ink">{l}</a></li>
+            {[['Catálogo', '#catalogo'], ['Galería', '#galeria'], ['Hacer un pedido', '#pedido']].map(([l, h]) => (
+              <li key={h}>
+                <a
+                  href={h}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(h);
+                  }}
+                  className="text-soft hover:text-ink"
+                >
+                  {l}
+                </a>
+              </li>
             ))}
           </ul>
           <ul className="space-y-2.5">
             <li><a href={`https://api.whatsapp.com/send?phone=${WHATSAPP}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-soft hover:text-ink">WhatsApp <ArrowUpRight size={13} /></a></li>
             <li><a href={`https://instagram.com/${INSTAGRAM}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-soft hover:text-ink">Instagram <ArrowUpRight size={13} /></a></li>
-            <li><a href="#contacto" className="text-soft hover:text-ink">Contacto</a></li>
+            <li>
+              <a
+                href="#contacto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('#contacto');
+                }}
+                className="text-soft hover:text-ink"
+              >
+                Contacto
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -158,21 +206,21 @@ export function Footer() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.2, ease }}
-        className="display mx-auto mt-14 max-w-7xl select-none whitespace-nowrap text-center text-[clamp(5rem,24vw,22rem)] !leading-[0.78]"
+        className="display mx-auto mt-14 max-w-7xl select-none whitespace-nowrap text-center text-[clamp(2.5rem,10.5vw,11rem)] !leading-[0.82]"
         aria-hidden
       >
-        El <em>Poli</em>
+        Amor Hecho <em>Postre</em>
       </motion.p>
       <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-line py-6 text-xs text-soft">
-        <span>© {new Date().getFullYear()} El Poli · Repostería casera</span>
-        <span>Hecho con mantequilla y cariño</span>
+        <span>© {new Date().getFullYear()} Amor Hecho Postre · Repostería casera</span>
+        <span>Horneado en casa con mucho amor ♥</span>
       </div>
     </footer>
   );
 }
 
 const PALETTES = [
-  { id: 'fresa', name: 'Fresa', c: ['#fbf5ec', '#f6dcd6', '#b8334a'] },
+  { id: 'fresa', name: 'Fresa', c: ['#fff4e0', '#fad9d2', '#d94b48'] },
   { id: 'pistacho', name: 'Pistacho', c: ['#f7f5ea', '#e9ebd2', '#5f7d45'] },
   { id: 'lavanda', name: 'Lavanda', c: ['#f8f4f6', '#ece3ee', '#7b4f9a'] },
 ];
@@ -180,12 +228,12 @@ const PALETTES = [
 /** Selector de paleta (versiones de color) */
 export function PaletteDock() {
   const [p, setP] = useState(() => {
-    try { return localStorage.getItem('elpoli-palette') || 'fresa'; } catch { return 'fresa'; }
+    try { return localStorage.getItem('amorhechopostre-palette') || 'fresa'; } catch { return 'fresa'; }
   });
   const [open, setOpen] = useState(false);
   useEffect(() => {
     document.documentElement.dataset.palette = p;
-    try { localStorage.setItem('elpoli-palette', p); } catch { /* sin almacenamiento */ }
+    try { localStorage.setItem('amorhechopostre-palette', p); } catch { /* sin almacenamiento */ }
   }, [p]);
   return (
     <div className="fixed bottom-5 left-4 z-[55] flex items-center gap-2 sm:left-6">

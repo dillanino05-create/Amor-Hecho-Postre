@@ -1,23 +1,37 @@
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
 import { Menu, X, Star, ArrowDown, ImagePlus } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { scrollToSection } from './cart';
 import { foto } from './data';
 import { Magnetic, btnGhost, btnPrimary, ease } from './ui';
 
 const LINKS = [
   ['Catálogo', '#catalogo'],
-  ['Lo que he hecho', '#galeria'],
+  ['A tu medida', '#medida'],
+  ['Galería', '#galeria'],
   ['Cómo pedir', '#como'],
+  ['Preguntas', '#preguntas'],
   ['Contacto', '#contacto'],
 ];
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" className={`group flex items-baseline gap-1.5 ${className}`} aria-label="El Poli, inicio">
-      <span className="display text-[1.7rem] leading-none">
-        El <em>Poli</em>
-      </span>
-      <span className="hidden text-[0.62rem] font-bold uppercase tracking-[0.25em] text-soft sm:inline">repostería casera</span>
+    <a
+      href="#top"
+      onClick={(e) => {
+        e.preventDefault();
+        scrollToSection('#top');
+      }}
+      className={`group flex items-center gap-2.5 ${className}`}
+      aria-label="Amor Hecho Postre, inicio"
+    >
+      <img src="/logo-circle.png" alt="Logo Amor Hecho Postre" className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-ink/15 shadow-sm transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11" />
+      <div className="flex flex-col">
+        <span className="display text-[1.35rem] leading-none sm:text-[1.55rem]">
+          Amor Hecho <em>Postre</em>
+        </span>
+        <span className="mt-0.5 text-[0.58rem] font-bold uppercase tracking-[0.22em] text-soft">repostería casera</span>
+      </div>
     </a>
   );
 }
@@ -49,14 +63,28 @@ export function Nav() {
           <ul className="hidden items-center gap-1 lg:flex">
             {LINKS.map(([l, h]) => (
               <li key={h}>
-                <a href={h} className="relative rounded-full px-3.5 py-2 text-sm font-medium text-soft transition-colors hover:text-ink">
+                <a
+                  href={h}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(h);
+                  }}
+                  className="relative rounded-full px-3 py-2 text-sm font-medium text-soft transition-colors hover:text-ink"
+                >
                   {l}
                 </a>
               </li>
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <a href="#pedido" className="flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-paper transition-colors hover:bg-berry">
+            <a
+              href="#pedido"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#pedido');
+              }}
+              className="flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-paper transition-colors hover:bg-berry"
+            >
               Hacer un pedido
             </a>
             <button onClick={() => setMenu(true)} className="grid h-11 w-11 place-items-center rounded-full border border-line lg:hidden" aria-label="Abrir menú">
@@ -81,10 +109,18 @@ export function Nav() {
                 <X size={18} />
               </button>
             </div>
-            <ul className="mt-14 flex flex-col gap-2">
+            <ul className="mt-10 flex flex-col gap-1.5">
               {LINKS.map(([l, h], i) => (
                 <motion.li key={h} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.06, ease, duration: 0.7 }}>
-                  <a href={h} onClick={() => setMenu(false)} className="display block py-1 text-5xl">
+                  <a
+                    href={h}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMenu(false);
+                      scrollToSection(h);
+                    }}
+                    className="display block py-1 text-4xl sm:text-5xl"
+                  >
                     {l}
                   </a>
                 </motion.li>
@@ -98,7 +134,7 @@ export function Nav() {
   );
 }
 
-const HEADLINE = ['Hecho', 'en', 'casa,', 'horneado', '*para*', '*tu*', '*día.*'];
+const HEADLINE = ['Amor', 'hecho', '*postre,*', 'horneado', '*para*', '*tu*', '*día.*'];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -106,7 +142,6 @@ export function Hero() {
   const yBig = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const ySmall = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const scaleImg = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const rot = useTransform(scrollYProgress, [0, 1], [0, 90]);
 
   return (
     <section id="top" ref={ref} className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-36">
@@ -124,7 +159,7 @@ export function Hero() {
             Repostería casera · Solo por encargo
           </motion.p>
 
-          <h1 className="display mt-6 text-[clamp(3rem,6.6vw,6.2rem)]" aria-label="Hecho en casa, horneado para tu día.">
+          <h1 className="display mt-6 text-[clamp(3rem,6.6vw,6.2rem)]" aria-label="Amor hecho postre, horneado para tu día.">
             {HEADLINE.map((w, i) => {
               const it = w.startsWith('*');
               const c = w.replace(/\*/g, '');
@@ -192,7 +227,7 @@ export function Hero() {
             transition={{ duration: 1.4, ease, delay: 0.2 }}
             className="relative ml-auto aspect-[4/5] w-[86%] overflow-hidden rounded-t-full rounded-b-[2rem] bg-blush shadow-[0_40px_80px_-30px_rgba(43,27,21,.45)]"
           >
-            <motion.img style={{ scale: scaleImg }} src={foto(19)} alt="Torta con rosas y fresas de El Poli" className="h-full w-full object-cover" />
+            <motion.img style={{ scale: scaleImg }} src={foto(19)} alt="Torta con rosas y fresas de Amor Hecho Postre" className="h-full w-full object-cover" />
           </motion.div>
 
           <motion.div
@@ -205,21 +240,21 @@ export function Hero() {
             <img src={foto(18)} alt="Cupcakes decorados con flores de crema" className="aspect-square w-full object-cover" />
           </motion.div>
 
-          {/* Sello giratorio */}
-          <motion.div style={{ rotate: rot }} className="absolute -top-4 left-[6%] h-28 w-28 sm:h-32 sm:w-32">
+          {/* Sello giratorio con logo siempre derecho */}
+          <div className="absolute -top-4 left-[6%] h-28 w-28 sm:h-32 sm:w-32">
             <svg viewBox="0 0 120 120" className="spin-slow h-full w-full">
               <defs>
                 <path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
               </defs>
               <circle cx="60" cy="60" r="58" fill="var(--paper)" />
-              <text fontSize="9.6" fontWeight="700" letterSpacing="2.1" fill="var(--ink)" fontFamily="Manrope">
-                <textPath href="#circ">HECHO EN CASA · POR ENCARGO · EL POLI ·</textPath>
+              <text fontSize="7.6" fontWeight="700" letterSpacing="1.35" fill="var(--ink)" fontFamily="Manrope">
+                <textPath href="#circ">AMOR HECHO POSTRE · HECHO EN CASA · POR ENCARGO ·</textPath>
               </text>
             </svg>
-            <span className="display absolute inset-0 grid place-items-center text-3xl text-berry">
-              <em>✿</em>
+            <span className="absolute inset-0 grid place-items-center">
+              <img src="/logo-circle.png" alt="Amor Hecho Postre" className="h-16 w-16 rounded-full object-cover shadow-sm sm:h-20 sm:w-20" />
             </span>
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}

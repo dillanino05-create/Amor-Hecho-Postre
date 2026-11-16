@@ -2,5 +2,8 @@ node_modules
 dist
 .env
 .env.*
+.netlify
 promo/out/
 promo2/out/
+promo/*.mp4
+promo2/*.mp4

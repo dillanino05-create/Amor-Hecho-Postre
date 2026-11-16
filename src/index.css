@@ -18,16 +18,16 @@
 /* Paletas claras — Fresa es la principal (base editorial) */
 :root,
 [data-palette="fresa"] {
-  --cream: #fbf5ec;
-  --paper: #fffdf9;
-  --butter: #f3e6cf;
-  --blush: #f6dcd6;
-  --ink: #2b1b15;
-  --soft: #6e5c52;
-  --berry: #b8334a;
-  --berry-deep: #8e2236;
+  --cream: #fff4e0;
+  --paper: #fffaf0;
+  --butter: #f5e4c8;
+  --blush: #fad9d2;
+  --ink: #3b1708;
+  --soft: #6e4f42;
+  --berry: #d94b48;
+  --berry-deep: #a82e2b;
   --leaf: #6f8c5e;
-  --line: rgba(43, 27, 21, 0.12);
+  --line: rgba(59, 23, 8, 0.13);
 }
 [data-palette="pistacho"] {
   --cream: #f7f5ea;

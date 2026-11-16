@@ -2,7 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
 import { X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { goToOrder, useOrder } from './cart';
-import { CATEGORIES, OCCASIONS, PRODUCTS, WORKS, cop, type Product } from './data';
+import { CATEGORIES, OCCASIONS, PRODUCTS, WORKS, type Product } from './data';
 import { Reveal, SplitHeading, ease } from './ui';
 
 function Chips<T extends string>({ items, value, onChange, id }: { items: readonly T[]; value: T; onChange: (v: T) => void; id: string }) {
@@ -43,19 +43,16 @@ function ProductCard({ p, i }: { p: Product; i: number }) {
         {p.tag && <span className="absolute left-4 top-4 rounded-full bg-paper/90 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-berry backdrop-blur">{p.tag}</span>}
         <motion.button
           whileTap={{ scale: 0.92 }}
-          onClick={() => goToOrder(setPick, p.name)}
+          onClick={() => goToOrder(setPick, p.name, p.image)}
           aria-label={`Pedir ${p.name}`}
           className="absolute bottom-4 right-4 flex h-12 items-center gap-2 rounded-full bg-paper px-4 text-sm font-semibold text-ink shadow-lg transition-colors duration-300 hover:bg-ink hover:text-paper"
         >
           Pedir este <ArrowUpRight size={16} />
         </motion.button>
       </div>
-      <div className="mt-5 flex items-start justify-between gap-4 px-1">
-        <div>
-          <p className="eyebrow !text-[0.62rem]">{p.category}</p>
-          <h3 className="display mt-1.5 text-[1.75rem]">{p.name}</h3>
-        </div>
-        <p className="mt-5 shrink-0 text-right text-sm tabular-nums"><span className="block text-[10px] uppercase tracking-wider text-soft">desde</span><span className="font-semibold">{cop(p.from)}</span></p>
+      <div className="mt-5 px-1">
+        <p className="eyebrow !text-[0.62rem]">{p.category}</p>
+        <h3 className="display mt-1.5 text-[1.75rem]">{p.name}</h3>
       </div>
       <p className="mt-2 px-1 text-sm leading-relaxed text-soft">{p.desc}</p>
       <p className="mt-3 px-1 text-xs font-semibold text-berry-deep">{p.note}</p>
@@ -75,7 +72,7 @@ export function Vitrina() {
             <SplitHeading text="Recetas de casa, *por encargo.*" className="mt-4 text-[clamp(2.8rem,6vw,5.5rem)]" />
           </div>
           <Reveal delay={0.1} className="max-w-sm text-soft">
-            No tengo vitrina: todo lo horneo en mi cocina para el día que lo necesitas. Estos son precios de referencia; el final depende del tamaño y el diseño.
+            No tengo vitrina: todo lo horneo en mi cocina para el día que lo necesitas. Cada pedido se cotiza a tu medida según las porciones, el relleno y el diseño.
           </Reveal>
         </div>
         <div className="mt-12">
@@ -124,7 +121,7 @@ export function Galeria() {
           </div>
         </div>
 
-        <motion.div layout className="mt-14 columns-1 gap-5 sm:columns-2 lg:columns-3">
+        <motion.div layout className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {list.map((w, i) => (
               <motion.button
@@ -136,10 +133,10 @@ export function Galeria() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.8, ease }}
                 onClick={() => setOpen(i)}
-                className="group relative mb-5 block w-full break-inside-avoid overflow-hidden rounded-[1.75rem] text-left"
+                className="group relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-butter text-left"
                 aria-label={`Ver ${w.title}`}
               >
-                <img src={w.image} alt={w.title} loading="lazy" className="max-h-[34rem] w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105" />
+                <img src={w.image} alt={w.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/0 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-paper">
                   <div>
@@ -184,9 +181,16 @@ export function Galeria() {
                 <p className="mt-4 text-soft">{cur.note}.</p>
                 <p className="mt-2 text-sm text-soft">¿Te gusta? Podemos hacer una parecida, adaptada a tu fecha y número de invitados.</p>
                 <div className="mt-auto flex items-center justify-between gap-3 pt-8">
-                  <a href="#pedido" onClick={() => { setPick(`Una parecida a: ${cur.title}`); setOpen(null); }} className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper transition-colors hover:bg-berry">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      goToOrder(setPick, `Una parecida a: ${cur.title}`, cur.image);
+                      setOpen(null);
+                    }}
+                    className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper transition-colors hover:bg-berry"
+                  >
                     Quiero una así
-                  </a>
+                  </button>
                   <div className="flex gap-2">
                     <button onClick={() => setOpen((open! - 1 + list.length) % list.length)} className="grid h-11 w-11 place-items-center rounded-full border border-line hover:border-ink" aria-label="Anterior"><ChevronLeft size={18} /></button>
                     <button onClick={() => setOpen((open! + 1) % list.length)} className="grid h-11 w-11 place-items-center rounded-full border border-line hover:border-ink" aria-label="Siguiente"><ChevronRight size={18} /></button>

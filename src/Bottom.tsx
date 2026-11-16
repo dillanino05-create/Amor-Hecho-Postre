@@ -258,7 +258,7 @@ export function PaletteDock() {
 
 export function WhatsFloat() {
   return (
-    <a href={`https://api.whatsapp.com/send?phone=${WHATSAPP}`} target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp" className="fixed bottom-5 right-4 z-[55] grid h-14 w-14 place-items-center rounded-full bg-[#1f9d55] text-white shadow-[0_15px_35px_-10px_rgba(31,157,85,.7)] transition-transform hover:scale-105 sm:right-6">
+    <a href={`https://api.whatsapp.com/send?phone=${WHATSAPP}`} target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp" className="fixed bottom-16 right-4 z-[55] grid h-14 w-14 place-items-center rounded-full bg-[#1f9d55] text-white shadow-[0_15px_35px_-10px_rgba(31,157,85,.7)] transition-transform hover:scale-105 sm:bottom-20 sm:right-6">
       <MessageCircle size={24} />
     </a>
   );
